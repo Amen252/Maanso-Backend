@@ -1,176 +1,148 @@
-# Maanso – Somali Poetry Platform
+# Maanso Backend
 
-Maanso is a modern web platform designed to preserve, organize, and share Somali gabay (poetry) in a digital, interactive, and accessible way.
+A robust Node.js/Express REST API backend for the Maanso Somali Poetry Platform, enabling management and sharing of Somali poetry (Gabay).
 
-The goal is to make Somali poetry easier to discover, understand, and experience, especially for younger generations.
+## 🚀 Features
 
----
+- **User Authentication** — Secure JWT-based authentication with role-based access control
+- **Poetry Management** — Full CRUD operations for Gabay (Somali poetry)
+- **User Management** — Admin capabilities for user administration
+- **Role-Based Access** — Three user roles: Admin, Abwaan (Poet), and Viewer
+- **Modular Architecture** — Scalable and maintainable code structure
+- **MongoDB Integration** — Robust database with Mongoose ODM
 
-## 🚀 Vision
+## 🛠️ Tech Stack
 
-To become the largest and most accessible online library of Somali poetry, combining tradition with modern technology.
+| Technology | Purpose               |
+| ---------- | --------------------- |
+| Node.js    | Runtime environment   |
+| Express.js | Web framework         |
+| MongoDB    | Database              |
+| Mongoose   | ODM                   |
+| JWT (jose) | Authentication        |
+| dotenv     | Environment variables |
 
----
+## 📋 Prerequisites
 
-## 🎯 Objectives
+- Node.js (v18+)
+- MongoDB (local or Atlas)
+- npm or yarn
 
-* Preserve Somali gabay digitally
-* Make poetry searchable and easy to explore
-* Help users understand complex gabay through explanations
-* Build a community around Somali literature
-
----
-
-## 🧩 Features
-
-* Gabay library (organized by poet, category, and era)
-* Smart search (by keyword, poet, or lines)
-* Gabay detail page
-* Explanation (tafsiir) for difficult poetry
-* User contributions (planned)
-* Favorites system (planned)
-
----
-
-## 🛠️ Tech Stack (MERN)
-
-### Frontend
-
-* React.js
-* Tailwind CSS
-
-### Backend
-
-* Node.js
-* Express.js
-
-### Database
-
-* MongoDB
-
-### Authentication
-
-* JSON Web Tokens (JWT)
-
----
-
-## 📁 Project Structure
-
-```text
-maanso/
-├── Frontend/
-│   ├── src/
-│   │   ├── pages/
-│   │   ├── components/
-│   │   ├── services/
-│   │   └── App.jsx
-│
-├── backend/
-│   ├── controllers/
-│   ├── models/
-│   ├── routes/
-│   ├── config/
-│   └── server.js
-│
-└── README.md
-```
-
----
-
-## ⚙️ Installation & Setup
-
-### 1. Clone the repository
+## ⚡ Installation
 
 ```bash
-git clone https://github.com/your-username/maanso.git
-cd maanso
-```
+# Navigate to backend directory
+cd Backend
 
-### 2. Setup Backend
-
-```bash
-cd backend
+# Install dependencies
 npm install
+
+# Start development server
 npm run dev
 ```
 
-### 3. Setup Frontend
+## 🔧 Environment Variables
 
-```bash
-cd Frontend
-npm install
-npm start
-```
-
----
-
-## 🔐 Environment Variables
-
-Create a `.env` file inside the `backend` folder:
+Create a `.env` file in the root directory:
 
 ```env
-MONGO_URI=your_mongodb_connection_string
-JWT_SECRET=your_secret_key
 PORT=5000
+MONGODB_URI=mongodb://localhost:27017/maanso
+JWT_SECRET=your_jwt_secret_key
 ```
 
----
+## 📁 Project Structure
 
-## ▶️ Usage
+```
+Backend/
+└── src/
+    ├── config/           # Configuration files
+    │   ├── ability.js    # CASL abilities for authorization
+    │   └── db.js         # Database connection
+    ├── middleware/       # Express middleware
+    │   └── auth.js       # JWT authentication middleware
+    ├── modules/          # Feature modules
+    │   ├── auth/         # Authentication module
+    │   ├── Gabay/       # Poetry (Gabay) module
+    │   └── users/       # User management module
+    ├── utils/            # Utility functions
+    │   ├── generateToken.js
+    │   └── getJWTSecret.js
+    └── server.js         # Application entry point
+```
 
-* Browse Somali gabay
-* Search by poet or keywords
-* View detailed gabay content
-* Read explanations for better understanding
+## 🔐 Authentication
 
----
+The API uses JWT (JSON Web Tokens) for authentication. Include the token in the Authorization header:
 
-## 🔄 Future Improvements
+```
+Authorization: Bearer <your_jwt_token>
+```
 
-* Poet profiles
-* AI-powered explanations
-* Daily featured gabay
-* Admin dashboard
+### User Roles
 
----
+| Role   | Description                         |
+| ------ | ----------------------------------- |
+| Admin  | Full access to all resources        |
+| Abwaan | Can create, read, update own poetry |
+| Viewer | Read-only access                    |
 
-## 🌍 Target Audience
+## 📚 API Endpoints
 
-* Somali students
-* Literature lovers
-* Researchers
-* General Somali community
+### Authentication
 
----
+| Method | Endpoint             | Description       |
+| ------ | -------------------- | ----------------- |
+| POST   | `/api/auth/register` | Register new user |
+| POST   | `/api/auth/login`    | Login user        |
+| GET    | `/api/auth/me`       | Get current user  |
 
-## ⚠️ Challenges
+### Users
 
-* Collecting authentic gabay data
-* Translating complex poetry
-* Ensuring accuracy
+| Method | Endpoint         | Description            |
+| ------ | ---------------- | ---------------------- |
+| GET    | `/api/users`     | List all users (Admin) |
+| GET    | `/api/users/:id` | Get user by ID         |
+| PUT    | `/api/users/:id` | Update user            |
+| DELETE | `/api/users/:id` | Delete user (Admin)    |
 
----
+### Gabay (Poetry)
 
-## 💡 Unique Value
+| Method | Endpoint         | Description       |
+| ------ | ---------------- | ----------------- |
+| GET    | `/api/gabay`     | List all poetry   |
+| GET    | `/api/gabay/:id` | Get poetry by ID  |
+| POST   | `/api/gabay`     | Create new poetry |
+| PUT    | `/api/gabay/:id` | Update poetry     |
+| DELETE | `/api/gabay/:id` | Delete poetry     |
 
-Maanso is not just a poetry website—it is a learning platform, a cultural archive, and a community hub for Somali literature.
+## 🧪 Testing
 
----
+```bash
+# Run tests (if configured)
+npm test
+```
 
-## 👤 Author
+## 📝 Core Concepts
 
-Mohamed Ali Omar
-MERN Stack Developer
+- **Express.js REST API** — Standard RESTful endpoints
+- **MongoDB with Mongoose** — Flexible schema-based data modeling
+- **JWT Authentication** — Secure token-based auth using `jose` library
+- **Role-Based Access Control** — CASL for authorization
+- **Modular Structure** — Each feature in its own module
 
----
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ## 📄 License
 
-This project is open-source and available under the MIT License.
+This project is licensed under the MIT License.
 
 ---
 
-## ⭐ Final Note
-
-Maanso is about preserving identity through technology.
-Build it simple, then make it powerful.
+Built with ❤️ for the Somali poetry community
